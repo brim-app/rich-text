@@ -1,11 +1,11 @@
-import * as React from 'react';
+import * as React from "react";
 
-import { BrimAppRichTextViewProps } from './BrimAppRichText.types';
+import { BrimAppRichTextViewProps } from "./BrimAppRichText.types";
 
 export default function BrimAppRichTextView(props: BrimAppRichTextViewProps) {
   return (
     <div>
-      <span>{props.name}</span>
+      <span>{props.paragraphStyle}</span>
     </div>
   );
 }

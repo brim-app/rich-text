@@ -1,7 +1,6 @@
-export type ChangeEventPayload = {
-  value: string;
-};
+import { StyleProp, ViewStyle } from "react-native";
 
 export type BrimAppRichTextViewProps = {
-  name: string;
+  paragraphStyle: "title" | "header" | "body";
+  style?: StyleProp<ViewStyle>;
 };
