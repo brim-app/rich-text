@@ -1,0 +1,10 @@
+{
+  "extends": "expo/tsconfig.base",
+  "compilerOptions": {
+    "strict": true,
+    "paths": {
+      "@brim-app/rich-text": ["../src/index"],
+      "@brim-app/rich-text/*": ["../src/*"]
+    }
+  }
+}
