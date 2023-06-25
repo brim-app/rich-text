@@ -21,13 +21,13 @@
     "@brim-app/rich-text",
     "BrimAppRichText"
   ],
-  "repository": "https://github.com/Stringsaeed/brim-app-rich-text",
+  "repository": "https://github.com/brim-app/rich-text",
   "bugs": {
-    "url": "https://github.com/Stringsaeed/brim-app-rich-text/issues"
+    "url": "https://github.com/brim-app/rich-text/issues"
   },
   "author": "Muhammed Saeed <stringsaeed@gmail.com> (https://github.com/Stringsaeed)",
   "license": "MIT",
-  "homepage": "https://github.com/Stringsaeed/brim-app-rich-text#readme",
+  "homepage": "https://github.com/brim-app/rich-text#readme",
   "dependencies": {},
   "devDependencies": {
     "@types/react": "^18.0.25",

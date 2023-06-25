@@ -1,0 +1,3 @@
+[submodule "ios/RichTextKit"]
+	path = ios/RichTextKit
+	url = git@github.com:danielsaidi/RichTextKit.git
