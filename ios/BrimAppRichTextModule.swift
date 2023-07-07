@@ -9,14 +9,18 @@ public class BrimAppRichTextModule: Module {
         // Can be inferred from module's class name, but it's recommended to set it explicitly for clarity.
         // The module will be accessible from `requireNativeModule('BrimAppRichText')` in JavaScript.
         Name("BrimAppRichText")
+        AsyncFunction("setStyle") { (reactTag: Int, style: String, value: Bool) in
+            DispatchQueue.main.async {
+                let brimAppRichTextView = self.appContext?.findView(withTag: reactTag, ofType: BrimAppRichTextView.self)
+                guard brimAppRichTextView != nil else {
+                    return
+                }
+                brimAppRichTextView?.setStyle(style, value)
+            }
+        }
 
         // Enables the module to be used as a native view. Definition components that are accepted as part of the
         // view definition: Prop, Events.
-        View(BrimAppRichTextView.self) {
-            // Defines a setter for the `name` prop.
-            Prop("paragraphStyle") { (view: BrimAppRichTextView, style: String) in
-                view.setStyle(style: style)
-            }
-        }
+        View(BrimAppRichTextView.self) {}
     }
 }

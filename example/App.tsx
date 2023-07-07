@@ -1,37 +1,61 @@
-import { Button, SafeAreaView, StyleSheet, Text, View } from "react-native";
-
-import { BrimAppRichTextView } from "@brim-app/rich-text";
-import { useState } from "react";
+import {SafeAreaView, StyleSheet} from "react-native";
+import {
+    BrimAppRichTextView,
+    BrimAppRichTextViewRef,
+} from "@brim-app/rich-text";
+import {useCallback, useRef, useState} from "react";
+import Toolbar from "./Toolbar";
 
 export default function App() {
-  const [paragraphStyle, setParagraphStyle] = useState<
-    "body" | "title" | "header"
-  >("title");
-  return (
-    <SafeAreaView style={styles.container}>
-      <Button title="toggle title" onPress={() => setParagraphStyle("title")} />
-      <Button title="toggle body" onPress={() => setParagraphStyle("body")} />
-      <Button
-        title="toggle header"
-        onPress={() => setParagraphStyle("header")}
-      />
-      <BrimAppRichTextView
-        style={{
-          flex: 1,
-          backgroundColor: "red",
-          width: "100%",
-          height: "100%",
-        }}
-        paragraphStyle={paragraphStyle}
-      />
-    </SafeAreaView>
-  );
+    const ref = useRef<BrimAppRichTextViewRef>(null);
+
+    const [editorState, setEditorState] = useState<{
+        bold: boolean;
+        italic: boolean;
+        underline: boolean;
+        strikethrough: boolean;
+    }>({
+        bold: false,
+        italic: false,
+        underline: false,
+        strikethrough: false,
+    });
+
+
+    const handleState = useCallback(
+        (key: keyof typeof editorState) => {
+            return () => {
+                const currentValue = editorState[key];
+                setEditorState((state) => ({
+                    ...state,
+                    [key]: !currentValue,
+                }));
+                ref.current?.setStyle(key, !currentValue);
+            };
+        },
+        [editorState]
+    );
+
+    return (
+        <SafeAreaView style={styles.container}>
+            <Toolbar editorState={editorState} handleState={handleState}/>
+            <BrimAppRichTextView
+                ref={ref}
+                style={styles.rtView}
+            />
+        </SafeAreaView>
+    );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    paddingHorizontal: 16,
-  },
+    container: {
+        flex: 1,
+        backgroundColor: "#fff",
+        paddingHorizontal: 16,
+    },
+    rtView: {
+        flex: 1,
+        width: "100%",
+        height: "100%",
+    }
 });

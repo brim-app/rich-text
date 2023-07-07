@@ -1,6 +1,6 @@
 import { StyleProp, ViewStyle } from "react-native";
+// import { EventEmitter } from "expo-modules-core";
 
 export type BrimAppRichTextViewProps = {
-  paragraphStyle: "title" | "header" | "body";
   style?: StyleProp<ViewStyle>;
 };

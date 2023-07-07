@@ -7,3 +7,4 @@ import { BrimAppRichTextViewProps } from "./BrimAppRichText.types";
 export const PI = Math.PI;
 
 export { BrimAppRichTextView, BrimAppRichTextViewProps };
+export * from "./BrimAppRichTextView";
