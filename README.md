@@ -17,8 +17,8 @@ For bare React Native projects, you must ensure that you have [installed and con
 
 ### Add the package to your npm dependencies
 
-```
-npm install @brim-app/rich-text
+```bash
+yarn @brim-app/rich-text
 ```
 
 ### Configure for iOS

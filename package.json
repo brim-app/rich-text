@@ -1,6 +1,6 @@
 {
   "name": "@brim-app/rich-text",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Rich Text Editor",
   "main": "build/index.js",
   "types": "build/index.d.ts",
@@ -40,5 +40,6 @@
     "expo": "*",
     "react": "*",
     "react-native": "*"
-  }
+  },
+  "private": false
 }
