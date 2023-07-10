@@ -10,6 +10,7 @@ const NativeView = requireNativeViewManager("BrimAppRichText");
 
 export type BrimAppRichTextViewRef = {
     setStyle(style: 'bold' | 'italic' | 'underline' | 'strikethrough', value: boolean): void;
+    setText(text: string): void;
 };
 
 function BrimAppRichTextViewComponent(props: BrimAppRichTextViewProps, ref: React.Ref<BrimAppRichTextViewRef>) {
@@ -23,6 +24,14 @@ function BrimAppRichTextViewComponent(props: BrimAppRichTextViewProps, ref: Reac
             if (!nodeId) return;
 
             BrimAppRichTextModule.setStyle(nodeId, style, value);
+        },
+        setText(text: string) {
+            if (!innerRef.current) return;
+
+            const nodeId = findNodeHandle(innerRef.current)
+            if (!nodeId) return;
+
+            BrimAppRichTextModule.setText(nodeId, text);
         }
     }));
 

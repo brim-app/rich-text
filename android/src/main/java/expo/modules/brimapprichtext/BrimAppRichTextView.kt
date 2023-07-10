@@ -16,11 +16,16 @@ class BrimAppRichTextView(context: Context, appContext: AppContext) :
     ExpoView(context, appContext) {
     private val activity = appContext.currentActivity
     private val rtApi = RTApi(context, RTProxyImpl(activity), RTMediaFactoryImpl(activity))
-    private val rtManager= RTManager(rtApi, null).also {
-        val rtEditText = RTEditText(context)
-        addView(rtEditText)
-        rtEditText.layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
+    private val rtEditText = RTEditText(context).also {
+        it.layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
+        addView(it)
+    }
+    private val rtManager = RTManager(rtApi, null).also {
         it.registerEditor(rtEditText, true)
+    }
+
+    fun setText(text: String) {
+        rtEditText.setText(text)
     }
 
     fun setStyle(style: String, value: Boolean) {

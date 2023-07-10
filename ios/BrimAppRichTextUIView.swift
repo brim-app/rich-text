@@ -25,4 +25,8 @@ struct BrimAppRichTextUIView: View {
                 }
             }
     }
+
+    func setText(_ text: String) {
+        self.text = NSAttributedString(string: text)
+    }
 }

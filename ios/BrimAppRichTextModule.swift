@@ -11,11 +11,13 @@ public class BrimAppRichTextModule: Module {
         Name("BrimAppRichText")
         AsyncFunction("setStyle") { (reactTag: Int, style: String, value: Bool) in
             DispatchQueue.main.async {
-                let brimAppRichTextView = self.appContext?.findView(withTag: reactTag, ofType: BrimAppRichTextView.self)
-                guard brimAppRichTextView != nil else {
-                    return
-                }
-                brimAppRichTextView?.setStyle(style, value)
+                self.appContext?.findView(withTag: reactTag, ofType: BrimAppRichTextView.self)?.setStyle(style, value)
+            }
+        }
+        
+        AsyncFunction("setText") {(reactTag: Int, text: String) in
+            DispatchQueue.main.async {
+                self.appContext?.findView(withTag: reactTag, ofType: BrimAppRichTextView.self)?.setText(text)
             }
         }
 

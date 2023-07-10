@@ -17,14 +17,14 @@ class BrimAppRichTextModule : Module() {
             appContext.findView<BrimAppRichTextView>(reactTag)?.setStyle(style, value)
         }
 
+        AsyncFunction("setText") { reactTag: Int, text: String ->
+            appContext.findView<BrimAppRichTextView>(reactTag)?.setText(text)
+        }
+
         // Enables the module to be used as a native view. Definition components that are accepted as part of
         // the view definition: Prop, Events.
         View(BrimAppRichTextView::class) {
             Events("onChangeText")
-
-            AsyncFunction("setStyle") { view: BrimAppRichTextView, style: String, value: Boolean ->
-                view.setStyle(style, value)
-            }
         }
     }
 }

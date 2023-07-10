@@ -21,6 +21,10 @@ class BrimAppRichTextView: ExpoView {
         vc.view.frame = bounds
     }
 
+    public func setText(_ text: String) {
+        ui.setText(text)
+    }
+
     public func setStyle(_ style: String, _ value: Bool) {
         switch style {
         case "italic":
