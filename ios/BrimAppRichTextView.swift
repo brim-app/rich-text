@@ -5,10 +5,17 @@ import SwiftUI
 // This view will be used as a native component. Make sure to inherit from `ExpoView`
 // to apply the proper styling (e.g. border radius and shadows).
 class BrimAppRichTextView: ExpoView {
+    private var setBefore = false
+
     let onChangeText = EventDispatcher("onChangeText")
 
     lazy var context = RichTextContext()
-    lazy var ui = BrimAppRichTextUIView(context: self.context)
+    lazy var ui = BrimAppRichTextUIView(context: self.context, onChangeHook: { text in
+        let returnData = BrimAppRichTextFormat.convert(with: text)
+
+        self.onChangeText(returnData)
+    })
+
     lazy var vc = ViewController(uiView: self.ui)
 
     required init(appContext: AppContext? = nil) {
@@ -22,7 +29,16 @@ class BrimAppRichTextView: ExpoView {
     }
 
     public func setText(_ text: String) {
-        ui.setText(text)
+        context.shouldSetAttributedString = NSAttributedString(string: text)
+    }
+
+    public func setInitialText(_ data: InitialText) {
+        guard !setBefore else {
+            return
+        }
+        let attributedString = BrimAppRichTextFormat.convert(with: data)
+        context.shouldSetAttributedString = attributedString
+        setBefore = true
     }
 
     public func setStyle(_ style: String, _ value: Bool) {

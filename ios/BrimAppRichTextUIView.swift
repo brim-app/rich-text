@@ -9,24 +9,19 @@ import RichTextKit
 import SwiftUI
 
 struct BrimAppRichTextUIView: View {
-    @State private var isLoaded: Bool = false
-    @State private var text = NSAttributedString(string: "")
+    public var onChangeHook: (_ text: NSAttributedString) -> Void
+
+    @State private var text: NSAttributedString
     @StateObject private var context: RichTextContext
 
-    init(context: RichTextContext) {
+    init(context: RichTextContext, onChangeHook: @escaping (_ text: NSAttributedString) -> Void) {
         self._context = StateObject(wrappedValue: context)
+        self.onChangeHook = onChangeHook
+        self.text = .init(string: "")
     }
 
     var body: some View {
-        RichTextEditor(text: $text, context: context)
-            .onAppear {
-                if !isLoaded {
-                    isLoaded = true
-                }
-            }
-    }
-
-    func setText(_ text: String) {
-        self.text = NSAttributedString(string: text)
+        RichTextEditor(text: self.$text, context: self.context)
+            .onChange(of: self.text, perform: self.onChangeHook)
     }
 }

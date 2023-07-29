@@ -1,13 +1,14 @@
-import { SafeAreaView, StyleSheet } from "react-native";
+import { Button, SafeAreaView, StyleSheet } from "react-native";
 import {
   BrimAppRichTextView,
   BrimAppRichTextViewRef,
 } from "@brim-app/rich-text";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useReducer, useRef, useState } from "react";
 import Toolbar from "./Toolbar";
 
 export default function App() {
   const ref = useRef<BrimAppRichTextViewRef>(null);
+  const [show, toggle] = useReducer((state) => !state, false);
 
   const [editorState, setEditorState] = useState<{
     bold: boolean;
@@ -38,7 +39,36 @@ export default function App() {
   return (
     <SafeAreaView style={styles.container}>
       <Toolbar editorState={editorState} handleState={handleState} />
-      <BrimAppRichTextView ref={ref} style={styles.rtView} />
+      <Button
+        title="Toggle"
+        onPress={() => {
+          ref.current?.setInitialText({
+            string: "Dadas \n\nDasdasd\n",
+            runs: [
+              {
+                attributes: { font: { name: "Times New Roman", size: 16 } },
+                range: [0, 8],
+              },
+              {
+                attributes: { font: { size: 16, name: "Times New Roman" } },
+                range: [8, 15],
+              },
+              {
+                range: [15, 16],
+                attributes: { font: { name: "Times New Roman", size: 16 } },
+              },
+            ],
+          });
+        }}
+      />
+
+      <BrimAppRichTextView
+        onChangeText={(text) => {
+          console.log(JSON.stringify(text));
+        }}
+        ref={ref}
+        style={styles.rtView}
+      />
     </SafeAreaView>
   );
 }

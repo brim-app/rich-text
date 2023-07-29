@@ -1,41 +1,74 @@
-import {requireNativeViewManager} from "expo-modules-core";
+import { requireNativeViewManager } from "expo-modules-core";
 import * as React from "react";
 
-import {BrimAppRichTextViewProps} from "./BrimAppRichText.types";
-import {useImperativeHandle} from "react";
-import {findNodeHandle} from "react-native";
+import {
+  BrimAppRichTextNativeViewProps,
+  BrimAppRichTextViewProps,
+  BrimAppRichTextViewRef,
+  onChangeTextEvent,
+} from "./BrimAppRichText.types";
+import { useImperativeHandle } from "react";
+import { findNodeHandle } from "react-native";
 import BrimAppRichTextModule from "./BrimAppRichTextModule";
 
-const NativeView = requireNativeViewManager("BrimAppRichText");
+const NativeView =
+  requireNativeViewManager<BrimAppRichTextNativeViewProps>("BrimAppRichText");
 
-export type BrimAppRichTextViewRef = {
-    setStyle(style: 'bold' | 'italic' | 'underline' | 'strikethrough', value: boolean): void;
-    setText(text: string): void;
-};
+function BrimAppRichTextViewComponent(
+  { onChangeText, ...props }: BrimAppRichTextViewProps,
+  ref: React.ForwardedRef<BrimAppRichTextViewRef>
+) {
+  const innerRef = React.useRef<any>(null);
 
-function BrimAppRichTextViewComponent(props: BrimAppRichTextViewProps, ref: React.Ref<BrimAppRichTextViewRef>) {
-    const innerRef = React.useRef<any>(null);
+  const handleNativeEvent = React.useCallback(
+    (event: onChangeTextEvent) => {
+      if (onChangeText) {
+        onChangeText(event.nativeEvent);
+      }
+    },
+    [onChangeText]
+  );
 
-    useImperativeHandle(ref, () => ({
-        setStyle(style: 'bold' | 'italic' | 'underline' | 'strikethrough', value: boolean) {
-            if (!innerRef.current) return;
+  useImperativeHandle(ref, () => ({
+    setStyle(
+      style: "bold" | "italic" | "underline" | "strikethrough",
+      value: boolean
+    ) {
+      if (!innerRef.current) return;
 
-            const nodeId = findNodeHandle(innerRef.current)
-            if (!nodeId) return;
+      const nodeId = findNodeHandle(innerRef.current);
+      if (!nodeId) return;
 
-            BrimAppRichTextModule.setStyle(nodeId, style, value);
-        },
-        setText(text: string) {
-            if (!innerRef.current) return;
+      BrimAppRichTextModule.setStyle(nodeId, style, value);
+    },
+    setText(text: string) {
+      if (!innerRef.current) return;
 
-            const nodeId = findNodeHandle(innerRef.current)
-            if (!nodeId) return;
+      const nodeId = findNodeHandle(innerRef.current);
+      if (!nodeId) return;
 
-            BrimAppRichTextModule.setText(nodeId, text);
-        }
-    }));
+      BrimAppRichTextModule.setText(nodeId, text);
+    },
+    setInitialText(
+      initialText: NonNullable<BrimAppRichTextNativeViewProps["initialText"]>
+    ) {
+      if (!innerRef.current) return;
 
-    return <NativeView ref={innerRef} {...props} />;
+      const nodeId = findNodeHandle(innerRef.current);
+      if (!nodeId) return;
+
+      BrimAppRichTextModule.setInitialText(nodeId, initialText);
+    },
+  }));
+
+  return (
+    <NativeView
+      // @ts-expect-error
+      ref={innerRef}
+      onChangeText={handleNativeEvent}
+      {...props}
+    />
+  );
 }
 
 const BrimAppRichTextView = React.forwardRef(BrimAppRichTextViewComponent);
