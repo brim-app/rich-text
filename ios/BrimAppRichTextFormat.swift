@@ -14,13 +14,6 @@ enum BrimAppRichTextFormat {
 
         var runAttributesArray: [ReturnedData] = []
 
-//        do {
-//            let data = try attributedString.richTextData(for: .rtf)
-//            if let string = String(data: data, encoding: .utf8) {
-//                returnedData["data"] = string
-//            }
-//        } catch {}
-
         attributedString.enumerateAttributes(in: NSRange(0 ..< attributedString.length), options: []) { attributedDictionary, range, _ in
             let runAttributes = NSMutableDictionary()
 
@@ -31,7 +24,7 @@ enum BrimAppRichTextFormat {
                 ] as ReturnedData
             }
 
-            if let strikethrough = attributedDictionary[.strikethroughStyle] as? NSNumber {
+            if let strikethrough = attributedDictionary[.strikethroughStyle] {
                 runAttributes["strikethrough"] = strikethrough
             }
 
