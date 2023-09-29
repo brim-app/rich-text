@@ -46,7 +46,7 @@ export default function App() {
             string: "Dadas \n\nDasdasd\n",
             runs: [
               {
-                attributes: { font: { name: "Times New Roman", size: 16 } },
+                attributes: { font: { name: "Times New Roman", size: 20 } },
                 range: [0, 8],
               },
               {
@@ -62,13 +62,7 @@ export default function App() {
         }}
       />
 
-      <BrimAppRichTextView
-        onChangeText={(text) => {
-          console.log(JSON.stringify(text));
-        }}
-        ref={ref}
-        style={styles.rtView}
-      />
+      <BrimAppRichTextView ref={ref} style={styles.rtView} />
     </SafeAreaView>
   );
 }
