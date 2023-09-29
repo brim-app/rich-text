@@ -23,7 +23,7 @@ function BrimAppRichTextViewComponent(
   const handleNativeEvent = React.useCallback(
     (event: onChangeTextEvent) => {
       if (onChangeText) {
-        onChangeText(event.nativeEvent);
+        onChangeText(event.nativeEvent.data);
       }
     },
     [onChangeText]
