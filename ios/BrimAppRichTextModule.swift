@@ -34,8 +34,6 @@ public class BrimAppRichTextModule: Module {
             Events("onChangeText")
 
             Prop("initialText") { (view, data: InitialText) in
-                NSLog("Hello from native")
-                NSLog("Prop(\"initialText\") \(data)")
                 view.setInitialText(data)
             }
         }
