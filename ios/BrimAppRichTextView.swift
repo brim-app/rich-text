@@ -29,7 +29,7 @@ class BrimAppRichTextView: ExpoView {
     }
 
     public func setText(_ text: String) {
-        context.shouldSetAttributedString = NSAttributedString(string: text)
+        context.setAttributedString(to: NSAttributedString(string: text))
     }
 
     public func setInitialText(_ data: InitialText) {
@@ -37,7 +37,7 @@ class BrimAppRichTextView: ExpoView {
             return
         }
         let attributedString = BrimAppRichTextFormat.convert(with: data)
-        context.shouldSetAttributedString = attributedString
+        context.setAttributedString(to: attributedString)
         setBefore = true
     }
 
