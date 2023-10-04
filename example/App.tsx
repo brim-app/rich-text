@@ -42,27 +42,26 @@ export default function App() {
       <Button
         title="Toggle"
         onPress={() => {
-          ref.current?.setInitialText({
-            string: "Dadas \n\nDasdasd\n",
+          ref.current?.setText({
+            string: "Testtest",
+            target: 45,
             runs: [
               {
-                attributes: { font: { name: "Times New Roman", size: 20 } },
                 range: [0, 8],
-              },
-              {
-                attributes: { font: { size: 16, name: "Times New Roman" } },
-                range: [8, 15],
-              },
-              {
-                range: [15, 16],
-                attributes: { font: { name: "Times New Roman", size: 16 } },
+                attributes: { font: { name: ".SFUI-Regular", size: 24 } },
               },
             ],
           });
         }}
       />
 
-      <BrimAppRichTextView ref={ref} style={styles.rtView} />
+      <BrimAppRichTextView
+        ref={ref}
+        style={styles.rtView}
+        onChangeText={(text) => {
+          console.log(JSON.stringify(text));
+        }}
+      />
     </SafeAreaView>
   );
 }
@@ -74,8 +73,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
   },
   rtView: {
-    flex: 1,
+    // flex: 1,
     width: "100%",
-    height: "100%",
+    minHeight:100,
   },
 });

@@ -4,7 +4,7 @@
 //
 //  Created by Muhammed Saeed on 29/07/2023.
 //
-
+import RichTextKit
 enum BrimAppRichTextFormat {
     typealias ReturnedData = [String: Any]
 
@@ -54,9 +54,9 @@ enum BrimAppRichTextFormat {
     static func convertAttributesFromJSONToDictionary(_ attribute: InitialTextAttribute) -> [NSAttributedString.Key: Any] {
         var attrDict: [NSAttributedString.Key: Any] = [:]
 
-        if let font = UIFont(name: attribute.font.name, size: attribute.font.size) {
-            attrDict.updateValue(font, forKey: .font)
-        }
+        let font = UIFont.systemFont(ofSize: attribute.font.size, weight: .bold)
+
+        attrDict.updateValue(font, forKey: .font)
 
         return attrDict
     }

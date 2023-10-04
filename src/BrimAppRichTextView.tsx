@@ -5,6 +5,7 @@ import {
   BrimAppRichTextNativeViewProps,
   BrimAppRichTextViewProps,
   BrimAppRichTextViewRef,
+  RichText,
   onChangeTextEvent,
 } from "./BrimAppRichText.types";
 import { useImperativeHandle } from "react";
@@ -23,7 +24,7 @@ function BrimAppRichTextViewComponent(
   const handleNativeEvent = React.useCallback(
     (event: onChangeTextEvent) => {
       if (onChangeText) {
-        onChangeText(event.nativeEvent.data);
+        onChangeText(event.nativeEvent);
       }
     },
     [onChangeText]
@@ -34,20 +35,20 @@ function BrimAppRichTextViewComponent(
       style: "bold" | "italic" | "underline" | "strikethrough",
       value: boolean
     ) {
-      if (!innerRef.current) return;
-
-      const nodeId = findNodeHandle(innerRef.current);
-      if (!nodeId) return;
-
-      BrimAppRichTextModule.setStyle(nodeId, style, value);
+      innerRef.current?.setStyle?.(style, value);
     },
-    setText(text: string) {
+    setText(text: string | RichText) {
       if (!innerRef.current) return;
 
       const nodeId = findNodeHandle(innerRef.current);
       if (!nodeId) return;
 
-      BrimAppRichTextModule.setText(nodeId, text);
+      if (typeof text === "string") {
+        return BrimAppRichTextModule.setText(nodeId, text);
+      }
+      if (typeof text === "object") {
+        return BrimAppRichTextModule.setTextWithData(nodeId, text);
+      }
     },
     setInitialText(
       initialText: NonNullable<BrimAppRichTextNativeViewProps["initialText"]>

@@ -22,6 +22,12 @@ public class BrimAppRichTextModule: Module {
             }
         }
 
+        AsyncFunction("setTextWithData") { (reactTag: Int, text: InitialText) in
+            DispatchQueue.main.async {
+                self.appContext?.findView(withTag: reactTag, ofType: BrimAppRichTextView.self)?.setText(text)
+            }
+        }
+
         AsyncFunction("setInitialText") { (reactTag: Int, data: InitialText) in
             DispatchQueue.main.async {
                 self.appContext?.findView(withTag: reactTag, ofType: BrimAppRichTextView.self)?.setInitialText(data)

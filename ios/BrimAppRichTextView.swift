@@ -1,4 +1,5 @@
 import ExpoModulesCore
+import OSLog
 import RichTextKit
 import SwiftUI
 
@@ -9,10 +10,12 @@ class BrimAppRichTextView: ExpoView {
 
     let onChangeText = EventDispatcher("onChangeText")
 
+    lazy var logger = Logger(subsystem: "BrimAppRichTextView", category: "DEBUG")
     lazy var context = RichTextContext()
     lazy var ui = BrimAppRichTextUIView(context: self.context, onChangeHook: { text in
         let returnData = BrimAppRichTextFormat.convert(with: text)
 
+        self.logger.info("onChangeText \(returnData.values)")
         self.onChangeText(returnData)
     })
 
@@ -30,6 +33,11 @@ class BrimAppRichTextView: ExpoView {
 
     public func setText(_ text: String) {
         context.setAttributedString(to: NSAttributedString(string: text))
+    }
+
+    public func setText(_ initialText: InitialText) {
+        let attributedString = BrimAppRichTextFormat.convert(with: initialText)
+        context.setAttributedString(to: attributedString)
     }
 
     public func setInitialText(_ data: InitialText) {

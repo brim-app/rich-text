@@ -3198,10 +3198,10 @@ expo-modules-autolinking@1.5.0:
     find-up "^5.0.0"
     fs-extra "^9.1.0"
 
-expo-modules-core@1.5.4:
-  version "1.5.4"
-  resolved "https://registry.yarnpkg.com/expo-modules-core/-/expo-modules-core-1.5.4.tgz#d1c9afd30a0b10dc1269330ff56cdd7c4a96ea93"
-  integrity sha512-/oID+SnVYUakb1De3FoT/gBPosPjY+docyHc+M8ZoPsA3LOdlCOkrQG9yw2lWEP2wDNVN6SAa/wcyNeLSIbdAw==
+expo-modules-core@1.5.4, expo-modules-core@^1.5.11:
+  version "1.5.11"
+  resolved "https://registry.yarnpkg.com/expo-modules-core/-/expo-modules-core-1.5.11.tgz#6ee33641cec5ef9c629393a267cef122110d2bf0"
+  integrity sha512-1Dj2t74nVjxq6xEQf2b9WFfAMhPzVnR0thY0PfRFgob4STyj3sq1U4PIHVWvKQBtDKIa227DrNRb+Hu+LqKWQg==
   dependencies:
     compare-versions "^3.4.0"
     invariant "^2.2.4"

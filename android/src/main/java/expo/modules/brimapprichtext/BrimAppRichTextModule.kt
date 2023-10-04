@@ -25,6 +25,14 @@ class BrimAppRichTextModule : Module() {
         // the view definition: Prop, Events.
         View(BrimAppRichTextView::class) {
             Events("onChangeText")
+
+            Prop("initialText") {view: BrimAppRichTextView, prop: InitialText ->
+                view.setText(prop.string)
+            }
+
+            AsyncFunction("setStyle") { view: BrimAppRichTextView, style: String, value: Boolean ->
+                view.setStyle(style, value)
+            }
         }
     }
 }

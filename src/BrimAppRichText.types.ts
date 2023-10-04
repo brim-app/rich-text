@@ -2,27 +2,39 @@ import { ViewProps } from "react-native";
 // import { EventEmitter } from "expo-modules-core";
 
 export type onChangeTextEvent = {
-  nativeEvent: {
-    data: string;
-  };
+  nativeEvent: RichText;
 };
 
-// {"string":"Testy\n\nDsadasdsa dsadsadsa","target":25,"runs":[{"attributes":{"font":{"name":".AppleSystemUIFont","size":16}},"range":[0,17]},{"attributes":{"font":{"size":16,"name":".AppleSystemUIFont"}},"range":[17,26]}]}
+export interface RichText {
+  string: string;
+  target?: number;
+  runs: RichTextRun[];
+}
+
+export interface RichTextRun {
+  range: [number, number];
+  attributes: RichTextAttributes;
+}
+
+export interface RichTextAttributes {
+  font: RichTextFont;
+}
+
+export interface RichTextFont {
+  name: string;
+  size: number;
+}
+
 export type BrimAppRichTextNativeViewProps = ViewProps & {
   onChangeText?: (event: onChangeTextEvent) => void;
-  initialText?: {
-    string: string;
-    runs: Array<{
-      attributes: {
-        font: { name: string; size: number };
-      };
-      range: [number, number];
-    }>;
-  };
+  initialText?: RichText;
 };
 
-export type BrimAppRichTextViewProps = BrimAppRichTextNativeViewProps & {
-  onChangeText?: (text: string) => void;
+export type BrimAppRichTextViewProps = Omit<
+  BrimAppRichTextNativeViewProps,
+  "onChangeText"
+> & {
+  onChangeText?: (text: RichText) => void;
 };
 
 export type BrimAppRichTextViewRef = {
@@ -30,7 +42,7 @@ export type BrimAppRichTextViewRef = {
     style: "bold" | "italic" | "underline" | "strikethrough",
     value: boolean
   ): void;
-  setText(text: string): void;
+  setText(text: string | RichText): void;
 
   setInitialText(
     text: NonNullable<BrimAppRichTextNativeViewProps["initialText"]>
